@@ -1,23 +1,23 @@
 var socket = io();
 
-function scrollToBottom() {
-  var messages = jQuery("#showMessages");
-  var newMessage = messages.children("div:last-child");
-  console.log(newMessage);
-  var newMessageHeight = newMessage.innerHeight();
-  var lastMessageHeight = newMessage.prev().innerHeight();
+// function scrollToBottom() {
+//   var messages = jQuery("#showMessages");
+//   var newMessage = messages.children("div:last-child");
+//   console.log(newMessage);
+//   var newMessageHeight = newMessage.innerHeight();
+//   var lastMessageHeight = newMessage.prev().innerHeight();
 
-  var clientHeight = messages.prop("clientHeight");
-  var scrollTop = messages.prop("scrollTop");
-  var scrollHeight = messages.prop("scrollHeight");
-  if (
-    clientHeight + scrollTop + newMessageHeight + lastMessageHeight >=
-    scrollHeight
-  ) {
-    console.log("scroll");
-    messages.scrollTop(scrollHeight);
-  }
-}
+//   var clientHeight = messages.prop("clientHeight");
+//   var scrollTop = messages.prop("scrollTop");
+//   var scrollHeight = messages.prop("scrollHeight");
+//   if (
+//     clientHeight + scrollTop + newMessageHeight + lastMessageHeight >=
+//     scrollHeight
+//   ) {
+//     console.log("scroll");
+//     messages.scrollTop(scrollHeight);
+//   }
+// }
 
 socket.on("connect", function () {
   console.log("connected to server");
@@ -66,7 +66,8 @@ socket.on("welcomeConnected", (data) => {
     text: data.text,
   });
   jQuery("#showMessages").append(html);
-  scrollToBottom();
+  // scrollToBottom(document.getElementById('showMessages'));
+  scrollToBottom(document.getElementById('content'));
 });
 
 socket.on("newUserConnected", (data) => {
@@ -77,7 +78,8 @@ socket.on("newUserConnected", (data) => {
     text: data.text,
   });
   jQuery("#showMessages").append(html);
-  scrollToBottom();
+  // scrollToBottom(document.getElementById('showMessages'));
+  scrollToBottom(document.getElementById('content'));
 });
 
 socket.on("newMessage", function (data) {
@@ -91,7 +93,8 @@ socket.on("newMessage", function (data) {
     createdAt: formattedTime
   });
   jQuery("#showMessages").append(html);
-  scrollToBottom();
+  // scrollToBottom(document.getElementById('showMessages'));
+  scrollToBottom(document.getElementById('content'));
 
   // var li = jQuery("<li></li>");
   // li.text(`${data.from} : ${data.text} - ${formattedTime}`);
@@ -109,6 +112,8 @@ socket.on("myMessage", function (data, callback) {
   });
   jQuery("#showMessages").append(html);
   callback();
+  // scrollToBottom(document.getElementById('showMessages'));
+  scrollToBottom(document.getElementById('content'));
 });
 
 jQuery("#message-form").on("submit", function (e) {
